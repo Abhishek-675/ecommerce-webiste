@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: black;
+    height: 20px;
+    font-family: 'Open Sans', sans-serif;
+    /* border: 3px solid red; */
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+nav {
+    flex: 1;
+    text-align: center;
+    /* border: 3px solid green; */
+}
+
+nav ul {
+    display: inline-block;
+    list-style-type: none;
+    /* border: 3px solid purple; */
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 50px;
+    /* border: 3px solid yellow; */
+
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+}
+
+.cart a{
+    border: 3px solid blue;
+    border-radius: 10px;
+    padding: 2px 5px;
+}
+
+.cart span {
+    color: blue;
+    font-size: larger;
+    position: relative;
+    bottom: 10px;
+}
+
+.cart a{
+    text-decoration: none;
+    color: white;
+}
+
+main {
+    margin-top: 42px;
+    width: 100%;
+}
+
+#title {
+    text-align: center;
+    background-color: grey;
+    color: white;
+    height: 150px;
+    font-size: 100px;
+    /* width: 100%; */
+    
+    
+}
+
+#title-music {
+    text-align: center;
+    font-family: 'MedievalSharp', sans-serif;
+    margin: 20px;
+    font-size: 30px;
+}
+
+
+
+.img-music {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'MadievalSharp', sans-serif;
+
+}
+
+
+.product {
+    padding: 10px 50px;
+
+}
+
+img {
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    height: 250px;
+    width: 250px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.product button {
+    margin-left: 150px;
+    background-color: rgb(14, 170, 232);
+    color: white;
+    padding: 5px;
+    border: 0;
+    font-size: 15productpx;
+    cursor: pointer;
+    
+}
+
+#title-merch {
+    text-align: center;
+    font-family: 'MedievalSharp', sans-serif;
+    margin: 20px;
+    font-size: 30px;
+}
+
+.img-merch-row-1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'MadievalSharp', sans-serif;
+
+}
+
+#see-cart {
+    color: aqua;
+    background-color: grey;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    text-align: center;
+    margin-left: 672px;
+    padding: 10px;
+    font-size: 17px; 
+    border-radius: 10px;
+    cursor: pointer;
+
+}
+
+footer {
+    background-color: skyblue;
+    display: flex;
+    padding: 20px;
+}
+
+footer h2 {
+    color: white;
+    padding-left: 20px;
+    font-size: 50px;
+    margin-top: 1px;
+    display: inline;
+    /* border: 3px solid yellow; */
+    position: relative;
+    left: 200px;
+}
+
+footer ul {
+    padding-left: 500px;
+    /* border: 3px solid blueviolet; */
+    position: relative;
+    left: 150px;   
+}
+
+footer ul li{
+    text-decoration: none;
+    display: inline;
+    cursor: pointer;
+    /* border: 3px solid red; */
+    padding: 0px 30px;
+}
+
+footer img {
+    height: 25px;
+    width: 25px;
+}
