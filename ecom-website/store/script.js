@@ -25,22 +25,30 @@ parentContainer.addEventListener('click', (e) => {
         const name = document.querySelector(`#${id} h4`).innerText;
         const image = document.querySelector(`#${id} img`).src;
         const price = document.querySelector(`#${id} label`).innerText;
-        
 
+        if (document.querySelector(`#in-cart-${id}`)) {
+            alert('Item is already in the cart');
+            return;
+        }
+        
         const div =  document.createElement('div');
         div.setAttribute('class', 'cart-div');
+        div.setAttribute('id', `in-cart-${id}`);
         div.innerHTML= `
-        <span><img class='cart-class-img' src=${image}>${name}</span>
-        <span>1</span>
-        <span>${price}</span>`
+        <span><img class='cart-class-img' src=${image}>
+        <span>${name}</span></span>  
+        <span>${price}</span>
+        <span><input type='text' value='1'>
+        <button id='cart-remove-btn'>REMOVE</button></span>`
        
         cartItems.append(div);
+
+
 
         /*----------notification------------ */
 
         const notifContainer = document.querySelector('.notif-div');
         const notif = document.createElement('div');
-        // notif.setAttribute('class', 'notif-div');
         notif.innerText = `${name} has been added to cart`;
         notifContainer.append(notif);
         parentContainer.append(notifContainer);

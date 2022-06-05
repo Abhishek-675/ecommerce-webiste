@@ -200,11 +200,15 @@ main .cart-float {
     padding: 20px;
     background: white;
     display: none;
+    max-width: 27%;
     
 }
 
 .cart-float h2 {
     text-align: center;
+    font-family: 'MedievalSharp', sans-serif;
+    font-weight: bold;
+    padding-bottom: 20px;
 }
 
 .cart-float .cancel {
@@ -222,15 +226,19 @@ main .cart-float {
 
 .cart-float .heading-div {
     display: flex;
+    justify-content: center;
     border-bottom: 1px solid black;
-    padding-bottom: 5px;
+    padding-bottom: 15px;
     font-size: 23px;
+    font-weight: bold;
 }
 
 .cart-float span {
     display: flex;
     padding: 0 1rem;
 }
+
+
 
 /*-------------------------------------------------------------------------*/
 
@@ -271,17 +279,48 @@ footer .icons {
     width: 30px;
 } 
 
-/*--------------------------------*/
+/*-------------side cart js-------------------*/
+
+.cart-items span {
+    padding: 0;
+    margin-left: 10px;
+}
 
 .cart-class-img {
-    width: 50px;
+    width: 70px;
 
 }
 
 .cart-div {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding-bottom: 20px;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    font-weight: 100;
+
+}
+
+.cart-div span {
+    align-items: center;
+}
+
+.cart-div span input {
+    width: 30px;
+    padding: 2px;
+    margin: 10px;
+    border: 1px solid #56ccf2;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.cart-div span button {
+    padding: 5px;
+    background: red;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 /*--------------notification---------------------*/
