@@ -1,3 +1,6 @@
+
+
+
 var cartBtn = document.getElementById('cart-top');
 
 cartBtn.addEventListener('click', () => {
@@ -38,13 +41,24 @@ parentContainer.addEventListener('click', (e) => {
         div.innerHTML = `
         <span><img class='cart-class-img' src=${image}>
         <span>${name}</span></span>  
-        <span>${price}</span>
+        <span>$${price}</span>
         <span><input type='text' value='1'>
         <button id='cart-remove-btn'>REMOVE</button></span>`
 
         cartItems.append(div);
 
 
+
+
+        axios.post('http://localhost:3000/cart', {
+           'imageUrl': image,
+           'title': name,
+           'price': price
+        })
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(err => console.log(err));
 
         /*----------notification------------ */
 
@@ -71,6 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
             };
         })
         .catch(err => console.log(err));
+    
+    axios.get('http://localhost:3000/products')
+    .then(response => {
+        console.log(response.data);
+        for (var i=0; i<response.data.length; i++) {
+            showCartProducts(response.data[i]);
+        };
+    })
+    .catch(err => console.log(err));
 });
 
 function showProducts(product) {
@@ -82,7 +105,21 @@ function showProducts(product) {
     <img id='${product.id}-img' src="${product.imageUrl}"
         alt="album cover">
     <br>
-    <label id='${product.id}-label'>${product.price}</label>
+    <label id='${product.id}-label'>$${product.price}</label>
     <button class="add-btn" id="add-btn">ADD TO CART</button>`;
 }
 
+function showCartProducts(product) {
+    const cartItems = document.getElementById('cart-items');
+    const div = document.createElement('div');
+        div.setAttribute('class', 'cart-div');
+        div.setAttribute('id', `in-cart-${product.id}`);
+        div.innerHTML = `
+        <span><img class='cart-class-img' src=${product.imageUrl}>
+        <span>${product.title}</span></span>  
+        <span>$${product.price}</span>
+        <span><input type='text' value='1'>
+        <button id='cart-remove-btn'>REMOVE</button></span>`
+
+        cartItems.append(div);
+}
