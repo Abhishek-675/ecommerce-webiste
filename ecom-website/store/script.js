@@ -50,27 +50,25 @@ parentContainer.addEventListener('click', (e) => {
 
 
 
-        axios.post('http://localhost:3000/cart', {
-           'imageUrl': image,
-           'title': name,
-           'price': price
-        })
+        axios.post('http://localhost:3000/cart', {'id': id})
             .then(response => {
                 console.log(response.data);
+                
+                /*----------notification------------ */
+                const notifContainer = document.querySelector('.notif-div');
+                const notif = document.createElement('div');
+                notif.innerText = `${name} has been added to cart`;
+                notifContainer.append(notif);
+                parentContainer.append(notifContainer);
+        
+                setTimeout(() => {
+                    notif.remove();
+                }, 1000);
+
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log("err"));
 
-        /*----------notification------------ */
 
-        const notifContainer = document.querySelector('.notif-div');
-        const notif = document.createElement('div');
-        notif.innerText = `${name} has been added to cart`;
-        notifContainer.append(notif);
-        parentContainer.append(notifContainer);
-
-        setTimeout(() => {
-            notif.remove();
-        }, 1000);
     }
 })
 
@@ -86,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.log(err));
     
-    axios.get('http://localhost:3000/products')
+    axios.get('http://localhost:3000/cart')
     .then(response => {
         console.log(response.data);
         for (var i=0; i<response.data.length; i++) {
@@ -112,14 +110,14 @@ function showProducts(product) {
 function showCartProducts(product) {
     const cartItems = document.getElementById('cart-items');
     const div = document.createElement('div');
-        div.setAttribute('class', 'cart-div');
-        div.setAttribute('id', `in-cart-${product.id}`);
-        div.innerHTML = `
+    div.setAttribute('class', 'cart-div');
+    div.setAttribute('id', `in-cart-${product.id}`);
+    div.innerHTML = `
         <span><img class='cart-class-img' src=${product.imageUrl}>
         <span>${product.title}</span></span>  
         <span>$${product.price}</span>
         <span><input type='text' value='1'>
         <button id='cart-remove-btn'>REMOVE</button></span>`
 
-        cartItems.append(div);
+    cartItems.append(div);
 }

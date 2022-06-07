@@ -9,9 +9,23 @@ const Product = sequelize.define('product', {
         allowNull: false,
         primaryKey: true
     },
-    imageUrl: Sequelize.STRING,
+    // imageUrl: Sequelize.STRING,
+    // title: Sequelize.STRING,
+    // price: Sequelize.DOUBLE
+
     title: Sequelize.STRING,
-    price: Sequelize.INTEGER
+  price: {
+    type: Sequelize.DOUBLE,
+    // allowNull: false
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    // allowNull: false
+  },
+  description: {
+    type: Sequelize.STRING,
+    // allowNull: false
+  }
 });
 
 module.exports = Product;
