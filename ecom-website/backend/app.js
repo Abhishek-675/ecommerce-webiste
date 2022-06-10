@@ -1,14 +1,9 @@
-const path = require('path');
-
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
-
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
+const routes = require('./routes/router');
 
 const Product = require('./models/product');
 const CartItem = require('./models/cart-item');
@@ -18,13 +13,6 @@ const Cart = require('./models/cart');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.set('view engine', 'ejs');
-app.set('views', 'views');
-
 
 
 app.use((req, res, next) => {
@@ -36,8 +24,7 @@ app.use((req, res, next) => {
     .catch(err => console.log(err));
 })
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+app.use(routes);
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);

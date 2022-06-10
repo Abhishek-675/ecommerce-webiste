@@ -341,3 +341,26 @@ footer .icons {
     border-radius: 6px;
     margin: 1rem;
 }
+
+/*----------------------------------------------*/
+
+.pagination {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .pagination button {
+    text-decoration: none;
+    color: #00695c;
+    padding: 0.5rem;
+    border: 1px solid #00695c;
+    margin: 0 1rem;
+    cursor: pointer
+  }
+  
+  .pagination button:hover,
+  .pagination button:active,
+  .pagination button.active {
+    background: #00695c;
+    color: white;
+  }
