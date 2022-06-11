@@ -1,12 +1,19 @@
+// const { default: axios } = require("axios");
+
+
 const parentContainer = document.getElementById('container-body');
 const addBtn = document.getElementById('add-btn');
 
 const cartItems = document.getElementById('cart-items');
 
+const sideCart = document.getElementById('cart-float');
+
 parentContainer.addEventListener('click', (e) => {
 
-    const sideCart = document.getElementById('cart-float');
-    if (e.target.id === 'cart-top' || e.target.id === 'see-cart') sideCart.style.display = 'block';
+    if (e.target.id === 'cart-top' || e.target.id === 'see-cart') {
+
+        sideCart.style.display = 'block';
+    }
     if (e.target.id === 'cancel') sideCart.style.display = 'none';    
 
 
@@ -18,7 +25,7 @@ parentContainer.addEventListener('click', (e) => {
         axios.post('http://localhost:3000/cart', {'id': id})
             .then(response => {
                 console.log(response.data);
-                
+               
                 //notification
                 const notifContainer = document.querySelector('.notif-div');
                 const notif = document.createElement('div');
@@ -36,6 +43,17 @@ parentContainer.addEventListener('click', (e) => {
 
     if (e.target.id === 'cart-remove-btn') {
         e.target.parentNode.parentNode.remove();
+        const productId = e.target.parentNode.parentNode.id;
+        axios.post(`http://localhost:3000/cart-delete`, {'productId': productId});
+    }
+
+    if (e.target.id === 'order-btn') {
+        axios.post('http://localhost:3000/orders')
+            .then(orderDetails => {
+                console.log(orderDetails.data.orderDetails);
+                alert(`Order successfully placed with id:${orderDetails.data.orderDetails.id}`);
+            })
+            
     }
 })
 
@@ -90,12 +108,24 @@ function showProducts(response) {
     const pagination = document.getElementById('pagination');
     pagination.classList.add('pagination');
     let paginationChild = '';
+
+    // if (response.data.pagination.currentPage !==1 && response.data.pagination.previousPage !==1) {
+    //     paginationChild += `<button class='pagination' id='pagination' onclick='pagination(${1})'>${1}</button>`;
+    // }
+    
     if (response.data.pagination.hasPreviousPage) {
         paginationChild = `<button class='pagination' id='pagination' onclick='pagination(${response.data.pagination.previousPage})'>${response.data.pagination.previousPage}</button>`;
     }
+
+    // paginationChild += `<button class='pagination' id='pagination' onclick='pagination(${response.data.pagination.currentPage})'>${response.data.pagination.currentPage}</button>`;
+    
     if (response.data.pagination.hasNextPage) {
         paginationChild += `<button class='pagination' id='pagination' onclick='pagination(${response.data.pagination.nextPage})'>${response.data.pagination.nextPage}</button>`;
     }
+
+    // if (response.data.pagination.lastPage !== response.data.pagination.currentPage && response.data.pagination.nextPage !== response.data.pagination.lastPage) {
+    //     paginationChild += `<button class='pagination' id='pagination' onclick='pagination(${response.data.pagination.lastPage})'>${response.data.pagination.lastPage}</button>`;
+    // }
     
     pagination.innerHTML = paginationChild;
 }
@@ -114,12 +144,19 @@ function pagination(page) {
 
 function showCartProducts(cartItem) {
 
+    let totalCartPrice = 0;
+    // console.log(cartItem.data.length)
+    // console.log(cartItem.cartItem.quantity)
+
     if (cartItem.data.length > 0) {
         cartItem.data.forEach(product => {
+            
+            document.querySelector('.cart-number').innertext = cartItem.data.length;
 
+            
             const div = document.createElement('div');
             div.setAttribute('class', 'cart-div');
-            div.setAttribute('id', `in-cart-${product.id}`);
+            div.setAttribute('id', `${product.id}`);
             div.innerHTML = `
                 <span><img class='cart-class-img' src=${product.imageUrl}>
                 <span>${product.title}</span></span>  
@@ -128,6 +165,15 @@ function showCartProducts(cartItem) {
                 <button id='cart-remove-btn'>REMOVE</button></span>`
         
             cartItems.appendChild(div);
+
+            totalCartPrice = totalCartPrice + (product.price);
+            document.querySelector('#total-value').innerText = `${totalCartPrice.toFixed(2)}`;
+
+            // totalCartPrice = totalCartPrice + (product.product.quantity * product.price);
+            // document.querySelector('#total-value').innerText = `${totalCartPrice.toFixed(2)}`;
+
+            //                <span><input type='text' value='${product.product.quantity}'>
+
         })
     }
 

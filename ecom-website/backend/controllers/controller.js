@@ -1,53 +1,53 @@
 const Product = require('../models/product');
-const { Op } = require("sequelize");
+const Order = require('../models/order');
+const User = require('../models/user');
+const CartItem = require('../models/cart-item');
+
+const ITEMS_PER_PAGE = 2;
 
 exports.getProducts = (req, res, next) => {
-    
-    let page = !req.query.page ? 1 : parseInt(req.query.page);
 
+    const page = +req.query.page || 1;
     let totalItems;
-    let start = (page * 2) - 1;
-    let end = page * 2;
-
-    Product.findAll().then(products => {
-        totalItems = products.length;
-    }).then(() => {
-        Product.findAll({
-            where: {
-                id: {
-                    [Op.between]: [start, end],
-                }
-            }
-        }).then(products => {
+    
+    Product.findAll()
+        .then(numProducts => {
+            totalItems = numProducts.length;
+            return Product.findAll({
+                offset: ((page - 1) * ITEMS_PER_PAGE),
+                limit: ITEMS_PER_PAGE
+            })
+        })
+        .then(products => {
             res.json({
-                "products": products, "pagination": {
+                "products": products,
+                'pagination': {
                     currentPage: page,
+                    hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+                    hasPreviousPage: page > 1,
                     nextPage: page + 1,
                     previousPage: page - 1,
-                    hasPreviousPage: page > 1,
-                    hasNextPage: end < totalItems,
+                    lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
                 }
-            });
-        }).catch(err => console.log(err))
-    })
-    
-    }
-    
-    exports.addProduct = (req, res, next) => {
-    
-        const title = req.body.title;
-        const imageUrl = req.body.imageUrl;
-        const price = req.body.price;
-    
-        req.user.createProduct({
-            title: title,
-            imageUrl: imageUrl,
-            price: price
-        })
-            .then((result) => {
-                res.json({ success: true });
             })
-            .catch(err => console.log(err));
+        })
+}
+
+exports.addProduct = (req, res, next) => {
+
+    const title = req.body.title;
+    const imageUrl = req.body.imageUrl;
+    const price = req.body.price;
+
+    req.user.createProduct({
+        title: title,
+        imageUrl: imageUrl,
+        price: price
+    })
+        .then((result) => {
+            res.json({ success: true });
+        })
+        .catch(err => console.log(err));
 };
 
 
@@ -60,7 +60,7 @@ exports.getCart = (req, res, next) => {
                     res.json(products)
                 })
         })
-        .catch((err) => res.status(500).json({message: 'Failed'}));
+        .catch((err) => res.status(500).json({ message: 'Failed' }));
 };
 
 exports.addToCart = (req, res, next) => {
@@ -91,7 +91,50 @@ exports.addToCart = (req, res, next) => {
             });
         })
         .then(() => {
-            res.status(200).json({message: 'Success'});
+            res.status(200).json({ message: 'Success' });
         })
-        .catch((err) => res.status(500).json({message: 'Failed'}));
+        .catch((err) => res.status(500).json({ message: 'Failed' }));
 }
+
+exports.removeFromCart = (req, res, next) => {
+    const prodId = req.body.productId;
+    req.user
+        .getCart()
+        .then(cart => {
+        return cart.getProducts({where: {id: prodId}});
+        })
+        .then(products => {
+        const product = products[0];
+        return product.cartItem.destroy();
+        })
+        .then(() => {
+            res.status(200).send({
+                data: 'item deleted'
+            })
+        })
+}
+
+exports.postOrder = (req, res, next) => {
+    let orderDetails;
+    let fetchedCart;
+    req.user.getCart()
+        .then(cart => {
+            fetchedCart = cart;
+            return cart.getProducts();
+        })
+        .then(products => {
+            return req.user.createOrder()
+            .then(order => {
+                orderDetails = order;
+                return order.addProducts(
+                    products.map(product => {
+                    product.orderItem = {quantity: product.cartItem.quantity};
+                    return product;
+                }))
+            })
+        })
+        .then(result => {
+            fetchedCart.setProducts(null);
+            res.status(200).json({orderDetails: orderDetails});
+        })
+};

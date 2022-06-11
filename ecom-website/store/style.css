@@ -61,6 +61,7 @@ header div span {
     font-size: 22px;
     position: fixed;
     top: 0;
+    padding-left: 11px;
 }
 
 /*-----------------------------album-------------------------------*/
@@ -239,6 +240,15 @@ main .cart-float {
 }
 
 
+.cart-total {
+    display: flex;
+    /* justify-content: center; */
+    border-bottom: 1px solid black;
+    padding-bottom: 15px;
+    font-size: 23px;
+    font-weight: bold;
+    margin-top: 20px;
+}
 
 /*-------------------------------------------------------------------------*/
 
@@ -321,6 +331,21 @@ footer .icons {
     color: white;
     font-weight: bold;
     cursor: pointer;
+}
+
+#order-div {
+    text-align: center;
+
+}
+
+#order-btn {
+    padding: 5px;
+    background: #56ccf2;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 /*--------------notification---------------------*/
