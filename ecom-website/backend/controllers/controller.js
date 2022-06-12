@@ -138,3 +138,11 @@ exports.postOrder = (req, res, next) => {
             res.status(200).json({orderDetails: orderDetails});
         })
 };
+
+exports.getOrder = (req, res, next) => {
+    req.user.getOrders({include: ['products']})
+    .then(orders => {
+        res.status(200).json(orders)
+    })
+    .catch(err => console.log(err));
+}
