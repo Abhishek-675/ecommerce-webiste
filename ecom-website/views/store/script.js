@@ -22,7 +22,7 @@ parentContainer.addEventListener('click', (e) => {
         console.log(id)
         const productName = e.target.parentNode.firstElementChild.innerText;
     
-        axios.post('http://localhost:3000/cart', {'id': id})
+        axios.post('http://44.203.138.131:3000/cart', {'id': id})
             .then(response => {
                 console.log(response.data);
                
@@ -44,11 +44,11 @@ parentContainer.addEventListener('click', (e) => {
     if (e.target.id === 'cart-remove-btn') {
         e.target.parentNode.parentNode.remove();
         const productId = e.target.parentNode.parentNode.id;
-        axios.post(`http://localhost:3000/cart-delete`, {'productId': productId});
+        axios.post(`http://44.203.138.131:3000/cart-delete`, {'productId': productId});
     }
 
     if (e.target.id === 'order-btn') {
-        axios.post('http://localhost:3000/orders')
+        axios.post('http://44.203.138.131:3000/orders')
             .then(orderDetails => {
                 console.log(orderDetails.data.orderDetails);
                 alert(`Order successfully placed with id:${orderDetails.data.orderDetails.id}`);
@@ -61,7 +61,7 @@ parentContainer.addEventListener('click', (e) => {
 
 window.addEventListener('DOMContentLoaded', () => {
     
-    axios.get(`http://localhost:3000/products`)
+    axios.get(`http://44.203.138.131:3000/products`)
         .then(response => {
             console.log(response.data);
             // for (var i=0; i<response.data.products.length; i++) {
@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.log(err));
     
-    axios.get('http://localhost:3000/cart')
+    axios.get('http://44.203.138.131:3000/cart')
     .then(cartItem => {
         console.log(cartItem.data);
         // for (var i=0; i<response.data.length; i++) {
@@ -131,7 +131,7 @@ function showProducts(response) {
 }
 
 function pagination(page) {
-    axios.get(`http://localhost:3000/products?page=${page}`)
+    axios.get(`http://44.203.138.131:3000/products?page=${page}`)
         .then(response => {
             showProducts(response);
         })

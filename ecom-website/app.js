@@ -31,6 +31,12 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
+app.use((req, res) => {
+    console.log('urlll', req.url)
+    res.sendFile(path.join(__dirname, `views/${req.url}`))
+})
+
+
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
 User.hasOne(Cart);
