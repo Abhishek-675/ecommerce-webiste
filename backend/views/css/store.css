@@ -44,6 +44,7 @@ header div {
     position: fixed;
     right: 2%;
     top: 2mm;
+    cursor: pointer;
     
 }
 
@@ -106,14 +107,12 @@ div .product img {
 }
 
 div .product button {
-    right: 1%;
     color: white;
     border-radius: 5px;
     padding: 5px 10px;
     background: #56ccf2;
     font-size: 15px;
     font-weight: bold;
-    margin-left: 7rem;
     border: none;
     cursor: pointer;
 }
@@ -200,7 +199,6 @@ main .cart-float {
     right: 0;
     padding: 20px;
     background: white;
-    display: none;
     max-width: 27%;
     
 }
@@ -376,9 +374,9 @@ footer .icons {
   
   .pagination button {
     text-decoration: none;
-    color: #00695c;
+    /* color: skyblue; */
     padding: 0.5rem;
-    border: 1px solid #00695c;
+    border: 1px solid skyblue;
     margin: 0 1rem;
     cursor: pointer
   }
@@ -386,6 +384,6 @@ footer .icons {
   .pagination button:hover,
   .pagination button:active,
   .pagination button.active {
-    background: #00695c;
+    background: skyblue;
     color: white;
   }

@@ -108,6 +108,8 @@ footer {
     padding: 30px;
     background: #56ccf2;
     margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 footer div {
@@ -116,4 +118,24 @@ footer div {
     width: 50%;
     text-align: center;
 }
+
+#icons ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: max-content;
+    margin: 0 auto;
+}
+
+#icons li{
+    padding: 0 20px;
+}
+
+#icons img{
+    width: 30px;
+    height: 30px;
+}
+
 
